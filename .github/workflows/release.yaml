@@ -31,14 +31,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-latest' # for Arm based macs (M1 and above).
-            args: '--target aarch64-apple-darwin'
-          - platform: 'macos-latest' # for Intel based macs.
-            args: '--target x86_64-apple-darwin'
+#          - platform: 'macos-latest' # for Arm based macs (M1 and above).
+#            args: '--target aarch64-apple-darwin'
+#          - platform: 'macos-latest' # for Intel based macs.
+#            args: '--target x86_64-apple-darwin'
           - platform: 'ubuntu-22.04'
             args: ''
-          - platform: 'windows-latest'
-            args: ''
+#          - platform: 'windows-latest'
+#            args: ''
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -75,23 +75,23 @@ jobs:
           prerelease: false
           args: ${{ matrix.args }}
 
-  docker:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Login Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
-
-      - name: Build Image
-        run: |
-          docker build . --tag ghcr.io/endrl/jellyfin-se:latest
-          docker push ghcr.io/endrl/jellyfin-se:latest
+  # docker:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     packages: write
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+  #
+  #     - name: Login Registry
+  #       uses: docker/login-action@v1
+  #       with:
+  #         registry: ghcr.io
+  #         username: ${{github.actor}}
+  #         password: ${{secrets.GITHUB_TOKEN}}
+  #
+  #     - name: Build Image
+  #       run: |
+  #         docker build . --tag ghcr.io/endrl/jellyfin-se:latest
+  #         docker push ghcr.io/endrl/jellyfin-se:latest
