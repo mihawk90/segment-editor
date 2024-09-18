@@ -60,6 +60,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad
+          ls -l /usr/lib/x86_64-linux-gnu/gstreamer-1.0/
+          sudo find /usr/lib/x86_64-linux-gnu/gstreamer-1.0 ! \( \
+              -name 'libgsthls.so' -o \
+              -name 'libgstmpegtsdemux.so' -o \
+              -name 'libgstx264.so' \) \
+              -type f -exec rm -f {} +
+          ls -l /usr/lib/x86_64-linux-gnu/gstreamer-1.0/
 
       - name: install frontend dependencies
         run: npm install # change this to npm, pnpm or bun depending on which one you use.
